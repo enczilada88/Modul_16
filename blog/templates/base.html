@@ -37,7 +37,24 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        {% if session.logged_in %}
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('list_drafts') }}">Szablony</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('create_entry') }}">Nowy wpis</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" method="post" action="{{ url_for('logout') }}">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Wyloguj</button>
+            </form>
+        {% else %}
+            <ul class="navbar-nav mr-auto"></ul>
+            <a href="{{ url_for('login') }}"><button class="btn btn-secondary my-2 my-sm-0" type="submit">Zaloguj</button></a>
+        {% endif %}
+    </div>
 </nav>
 <main role="main" class="container">
     {% with messages = get_flashed_messages() %}
