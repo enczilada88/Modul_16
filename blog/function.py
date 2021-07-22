@@ -14,6 +14,11 @@ def login_required(view_func):
         return redirect(url_for('login', next=request.path))
     return check_permissions
 
+
+def homepage():
+    all_posts = Entry.query.filter_by(is_published=True).order_by(Entry.pub_date.desc())
+    return render_template('homepage.html', all_posts=all_posts)
+
 def create_post(**kwargs):
     # GET
     form = EntryForm()
@@ -74,3 +79,8 @@ def delete_post(entry_id: int):
         else:
             flash(f'Brak postu o numerze ID: {entry_id}')
             return redirect(url_for('index'))
+
+
+def create_drafts():
+    all_drafts = Entry.query.filter_by(is_published=False).order_by(Entry.pub_date.desc())
+    return render_template('draft_list.html', all_drafts=all_drafts)
