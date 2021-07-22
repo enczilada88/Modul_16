@@ -20,6 +20,12 @@ def create_entry():
 def edit_entry(entry_id: int):
     return edit_post(entry_id=entry_id)
 
+@app.route('/delete/<int:entry_id>', methods=['POST'])
+@login_required
+def delete_entry(entry_id: int):
+    return delete_post(entry_id=entry_id)
+
+
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -51,9 +57,6 @@ def list_drafts():
     return render_template('draft_list.html', all_drafts=all_drafts)
 
 
-@app.route('/delete/<int:entry_id>', methods=['POST'])
-@login_required
-def delete_entry(entry_id: int):
-    return delete_post(entry_id=entry_id)
+
 
 
