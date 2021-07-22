@@ -7,9 +7,7 @@ from blog.function import *
 
 @app.route('/')
 def index():
-    all_posts = Entry.query.filter_by(is_published=True).order_by(Entry.pub_date.desc())
-    return render_template('homepage.html', all_posts=all_posts)
-
+    return homepage()
 
 @app.route('/new-post/', methods=['GET', 'POST'])
 def create_entry():
@@ -20,11 +18,11 @@ def create_entry():
 def edit_entry(entry_id: int):
     return edit_post(entry_id=entry_id)
 
+
 @app.route('/delete/<int:entry_id>', methods=['POST'])
 @login_required
 def delete_entry(entry_id: int):
     return delete_post(entry_id=entry_id)
-
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -53,9 +51,7 @@ def logout():
 @app.route('/drafts/', methods=['GET'])
 @login_required
 def list_drafts():
-    all_drafts = Entry.query.filter_by(is_published=False).order_by(Entry.pub_date.desc())
-    return render_template('draft_list.html', all_drafts=all_drafts)
-
+    return create_drafts()
 
 
 
